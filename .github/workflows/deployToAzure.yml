@@ -12,7 +12,8 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+env: 
+    resourceGroupName: GitHubExampleRG
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -37,7 +38,7 @@ jobs:
         uses: Azure/powershell@v1
         with:
           # Specify the Az PowerShell script here.
-          inlineScript: New-Azresourcegroup -Name GithubExampleRG -Location WestEurope -Force
+          inlineScript: New-Azresourcegroup -Name ${{ env.resourceGroupName }} -Location WestEurope -Force
           # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
           azPSVersion: latest
          
@@ -47,7 +48,7 @@ jobs:
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
           scope: resourcegroup
           # Provide the name of a resource group, only required for resource Group deployments.
-          resourceGroupName: githubexampleRG
+          resourceGroupName: ${{ env.resourceGroupName }}
           # Specify the path or URL to the Azure Resource Manager template.
           template: main.bicep
           # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
