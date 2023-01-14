@@ -34,7 +34,7 @@ jobs:
            # ClientId of the Azure Service principal created.
            enable-AzPSSession: true
            
-      - name: Azure PowerShell Action
+      - name: Create the resourcegroup
         uses: Azure/powershell@v1
         with:
           # Specify the Az PowerShell script here.
