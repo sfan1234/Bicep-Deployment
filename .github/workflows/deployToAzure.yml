@@ -53,3 +53,4 @@ jobs:
           template: main.bicep
           # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
           parameters: storageAccountPrefix=ghaction
+          deploymentName: "gh${{github.run_id}}"
