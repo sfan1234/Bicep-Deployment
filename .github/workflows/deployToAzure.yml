@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Bicep Deployment
 
 # Controls when the workflow will run
 on:
@@ -37,7 +37,7 @@ jobs:
         uses: Azure/cli@v1.0.7
         with:
            # Specify the script here
-           inlineScript: az bicep build --file main.bicep --outfile ./main.json
+           inlineScript: az bicep build --file ./sources/single/main.bicep --outfile ./sources/single/main.json
            # Azure CLI version to be used to execute the script. If not provided, latest version is used
          
       - name: Create the resourcegroup
@@ -51,7 +51,7 @@ jobs:
         uses: Azure/powershell@v1
         with:
           # Specify the Az PowerShell script here.
-          inlineScript: New-AZresourcegroupdeployment -Resourcegroupname  ${{ env.resourceGroupName }} -TemplateFile main.bicep -WhatIf    # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
+          inlineScript: New-AZresourcegroupdeployment -Resourcegroupname  ${{ env.resourceGroupName }} -TemplateFile ./sources/single/main.bicep -WhatIf    # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
           azPSVersion: latest
           # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
          
@@ -64,7 +64,7 @@ jobs:
             # Provide the name of a resource group, only required for resource Group deployments.
             resourceGroupName: ${{ env.resourceGroupName }}
             # Specify the path or URL to the Azure Resource Manager template.
-            template: main.json
+            template: ./sources/single/main.json
             # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
             parameters: storageAccountPrefix=ghaction
             deploymentName: "gh${{github.run_id}}"
